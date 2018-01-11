@@ -1,0 +1,58 @@
+h2 {
+  font-size: 25px;
+  position: absolute;
+  left: 80px;
+}
+
+.axis {
+  font-family: arial;
+  font-size: 0.6em;
+}
+
+path {
+	fill: none;
+	stroke: black;
+	stroke-width: 2px;
+}
+
+.tick {
+	fill: none;
+	stroke: black;
+}
+
+circle {
+	opacity: 0.5;
+	stroke: none;
+}
+
+.line_plot {
+	fill: none;
+	stroke: #4eb0bb;
+	stroke-width: 1px;
+}
+
+div.hand_buttons {
+	position: absolute;
+	right: 75px;
+	top: 35px;
+}
+
+div.hand_buttons div {
+	font-family: arial;
+	display: inline;
+	padding: 3px;
+	margin: 7px;
+}
+
+div.bmi_buttons {
+	position: absolute;
+	right: 450px;
+	top: 35px;
+}
+
+div.bmi_buttons div {
+	font-family: arial;
+	display: inline;
+	padding: 3px;
+	margin: 7px;
+}
