@@ -1,7 +1,7 @@
 h2 {
   font-size: 25px;
   position: absolute;
-  left: 80px;
+  left: 82px;
 }
 
 .axis {
@@ -20,8 +20,42 @@ path {
 	stroke: black;
 }
 
+p {
+	position: absolute;
+	top:118px;
+	color: gray;
+}
+
+.normal {
+	left: 82px;
+    width: 175px;
+    top: 135px;
+    position: absolute;
+    color: white;
+    text-align: center;
+    background: #FFBFBF;
+}
+
+.overweight {
+	left: 270px;
+    width: 175px;
+    top: 135px;
+    position: absolute;
+    color: white;
+    text-align: center;
+    background: #FF0000;
+}
+.obese {
+	left:460px;
+	width: 100px;
+    top: 135px;
+    position: absolute;
+    color: white;
+    text-align: center;
+    background: #551C1C;
+}
 circle {
-	opacity: 0.5;
+	opacity: 0.6;
 	stroke: none;
 }
 
@@ -31,23 +65,27 @@ circle {
 	stroke-width: 1px;
 }
 
+svg {
+	position: absolute;
+	top:90px;
+}
 div.hand_buttons {
 	position: absolute;
-	right: 75px;
-	top: 35px;
+	left: 58px;
+	top: 70px;
 }
 
 div.hand_buttons div {
 	font-family: arial;
 	display: inline;
-	padding: 3px;
-	margin: 7px;
+	padding: 5px;
+	margin: 24px;
 }
 
 div.bmi_buttons {
 	position: absolute;
-	right: 450px;
-	top: 35px;
+	left: 75px;
+	top: 105px;
 }
 
 div.bmi_buttons div {
@@ -55,4 +93,9 @@ div.bmi_buttons div {
 	display: inline;
 	padding: 3px;
 	margin: 7px;
+}
+
+
+.average{
+   stroke-dasharray: 5,5; 
 }

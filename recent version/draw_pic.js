@@ -6,7 +6,7 @@ function draw(data) {
 
   "use strict";
   var margin = 75,
-      width = 1000 - margin,
+      width = 1400 - margin,
       height = 600 - margin;
 
   var radius = 1;
@@ -24,33 +24,14 @@ function draw(data) {
     .append("h2")
     .text("Baseballer Performance");
 
-   
-  d3.select("body")
-    .append("div")
-    .attr('class',"normal")
-    .text("Normal");
-
-  d3.select("body")
-  .append("div")
-  .attr('class',"overweight")
-  .text("Overweight");
-
-  d3.select("body")
-  .append("div")
-  .attr('class',"obese")
-  .text("Obese");
-
-
 
   var svg = d3.select("body")
-              .append("svg")
-              .attr("width", width + margin)
-              .attr("height", height + margin)
-              .append('g')
-              .attr('class', 'chart');
+      .append("svg")
+      .attr("width", width + margin)
+      .attr("height", height + margin)
+      .append('g')
+      .attr('class', 'chart');
 
-
-  // handedness color
   function handedness(d){
           if (d['handedness'] == "L") {
               return 'blue';
@@ -133,29 +114,6 @@ function draw(data) {
       });
 
   
-  //draw avgerage avg,HR
-
-  var avg_line = svg.append('line')
-                .attr('class','average')
-                .attr('x1',hr_scale(0))
-                .attr('y1',avg_scale(0.243))
-                .attr('x2',925)
-                .attr('y2',avg_scale(0.243))
-                .text('Average')
-                .attr("stroke","gray")
-                .attr("stroke-width",2);
-
-  var hr_line = svg.append('line')
-                .attr('class','average')
-                .attr('x1',hr_scale(59))
-                .attr('y1',75)
-                .attr('x2',hr_scale(59))
-                .attr('y2',450+75)
-                .attr("stroke","gray")
-                .attr("stroke-width",2);
-
-
-  // draw circle
   d3.selectAll('circle')
     .attr('cx',cx)
     .attr('cy',cy)
@@ -168,7 +126,7 @@ function draw(data) {
       if (d == "L") {
           return 'lightblue';
       } else if (d == "R") {
-          return '#FFBFBF';
+          return 'red';
       } else {
           return 'lightgreen';
       }
@@ -185,29 +143,7 @@ function draw(data) {
 
   }
 
-  // bmi button
-  function bmi_color(d){
-      if (d < 25){
-          return '#FFBFBF';
-      } else if (d < 30){
-          return '#FF0000';
-      } else {
-          return '#551C1C';
-      }
-  }
- 
-  function bmi_size(d){
-      if (d < 25){
-          return radius * 5;
-      } else if (d < 30){
-          return radius * 10;
-      } else {
-          return radius * 15;
-      }
-  }
 
-  
-  
   // buttons 
   var buttons = d3.select("body")
                   .append("div")
@@ -219,7 +155,7 @@ function draw(data) {
                   .text(text_content)
                   .style("background",text_color)
                   .style("color","white");
-
+ 
   var bmi_buttons = d3.select("body")
                   .append("div")
                   .attr("class", "bmi_buttons")
@@ -228,50 +164,24 @@ function draw(data) {
                   .enter()
                   .append("div")
                   .text(function(d){return d;})
-                  .style("background", bmi_color)
+                  .style("background","orange")
                   .style("color","white");
 
-  
+
 
   // filter handedness
   function update_bmi(bmi) {
 
-      d3.selectAll('circle').remove();
-      d3.selectAll('.calculated').remove();
-      d3.selectAll('.handed').remove();
-
+      d3.selectAll('circle').remove()
+      
       var filtered = data.filter(function(d) {
         return d["BMI"] == bmi;
       })
-
-      var bmi_avg = d3.sum(filtered, function(d){
-        return d['avg'];
-      })/filtered.length;
-      var bmi_hr = d3.sum(filtered, function(d){
-        return +d['HR'];
-      })/filtered.length;
-
-      var avg_line = svg.append('line')
-              .attr('class','calculated')
-              .attr('x1',hr_scale(0))
-              .attr('y1',avg_scale(bmi_avg))
-              .attr('x2',925)
-              .attr('y2',avg_scale(bmi_avg))
-              .text('Average')
-              .attr("stroke",bmi_color(bmi))
-              .attr("stroke-width",2);
-
-      var hr_line = svg.append('line')
-                    .attr('class','calculated')
-                    .attr('x1',hr_scale(bmi_hr))
-                    .attr('y1',75)
-                    .attr('x2',hr_scale(bmi_hr))
-                    .attr('y2',450+75)
-                    .attr("stroke",bmi_color(bmi))
-                    .attr("stroke-width",2);
    
       d3.select("h2")
         .text("Baseballer Performance By BMI " + bmi);
+      
+      var multiplier = 2;
 
       var circles = d3.select('svg')
                       .selectAll('circle')
@@ -281,10 +191,10 @@ function draw(data) {
                       .attr('cx', cx)
                       .attr('cy', cy)
                       .attr('r', function(d){
-                        return bmi_size(d['BMI']);
+                        return (d['BMI'] - 19)*multiplier;
                       })
                       .attr('fill', function(d){
-                        return bmi_color(d['BMI']);
+                        return text_color(d['handedness']);
                       });  
   }
   
@@ -310,38 +220,11 @@ function draw(data) {
   // filter handedness
   function update_hand(handedness) {
 
-      d3.selectAll('circle').remove();
-      d3.selectAll('.calculated').remove();
+      d3.selectAll('circle').remove()
 
       var filtered = data.filter(function(d) {
         return d["handedness"] == handedness;
       })
-
-      var hand_avg = d3.sum(filtered, function(d){
-        return d['avg'];
-      })/filtered.length;
-      var hand_hr = d3.sum(filtered, function(d){
-        return +d['HR'];
-      })/filtered.length;
-
-      var avg_line = svg.append('line')
-              .attr('class','handed')
-              .attr('x1',hr_scale(0))
-              .attr('y1',avg_scale(hand_avg))
-              .attr('x2',925)
-              .attr('y2',avg_scale(hand_avg))
-              .text('Average')
-              .attr("stroke",text_color(handedness))
-              .attr("stroke-width",2);
-
-      var hr_line = svg.append('line')
-                    .attr('class','handed')
-                    .attr('x1',hr_scale(hand_hr))
-                    .attr('y1',75)
-                    .attr('x2',hr_scale(hand_hr))
-                    .attr('y2',450+75)
-                    .attr("stroke",text_color(handedness))
-                    .attr("stroke-width",2);
 
       d3.select("h2")
         .text("Baseballer Performance By " + text_content(handedness));
@@ -368,7 +251,7 @@ function draw(data) {
                     d3.select(this)
                       .transition()
                       .duration(500)
-                      .style("color", "gray");
+                      .style("color", "purple");
                     update_bmi(d); 
             });
 
@@ -382,62 +265,35 @@ function draw(data) {
                     d3.select(this)
                       .transition()
                       .duration(500)
-                      .style("color", "gray");
+                      .style("color", "purple");
           
                     update_hand(d);
                 });
 
-      
+      /*
       var legend = svg.append("g")
           .attr("class", "legend")
-          .attr("transform", "translate(" + (width - 300) + "," + 460 + ")")
+          .attr("transform", "translate(" + (width - 100) + "," + 20 + ")")
           .selectAll("g")
-          .data(["Average avg & HR overall", "Average avg & HR under category data"])
-          .enter(); 
+          .data(["Left_handed", "Right_handed","Both_handed"])
+          .enter().append("g"); 
 
-      legend.append("line")
-            .attr('class','label')
-            .attr('x1',0)
-            .attr('y1',function(d){
-                if (d == "Average avg & HR overall") {
-                  return 0;
-                } else {
-                  return 30;
-                }
-              })
-            .attr('x2',30)
-            .attr('y2',function(d){
-                if (d == "Average avg & HR overall") {
-                  return 0;
-                } else {
-                  return 30;
-                }
-              })
-            .attr("stroke",function(d){
-                if (d == "Average avg & HR overall") {
-                  return "gray";
-                } else {
-                  return "red";
-                }
-            })
-            .attr("stroke-width",2)
-            .attr('stroke-dasharray',function(d){
-                if (d == "Average avg & HR overall") {
-                  return (3,3);
-                } else {
-                  return (0,0);
-                }
-              });
-
+      legend.append("circle")
+          .attr("cy", function(d, i) {
+              return i * 30;
+          })
+          .attr("r", radius * 5)
+          .attr("fill", text_color);
 
       legend.append("text")
           .attr("y", function(d, i) {
               return i * 30 + 5;
           })
-          .attr("x", 30)
+          .attr("x", radius * 5)
           .text(function(d) {
               return d;
           })
-          .attr("fill",'Gray');
+          .attr("fill",text_color);
+      */
 
     };
