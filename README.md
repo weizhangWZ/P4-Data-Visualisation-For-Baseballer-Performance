@@ -15,7 +15,7 @@ So I chose **scatter plot** to do the job. I also added baseline to help audienc
 
 ### Feedbacks
 1. The circles for BMI 20 is too small to see. Two people conplaint about it.
-2. Do not Classify the BMI into normal and overweight, as it can be more specific, if the audience are coach. **opposite** Another person recommend me to use classification.
+2. Do not classify the BMI into normal and overweight, as it can be more specific, if the audience is a coach. **Opposite** Another person recommended me to use classification.
 3. Left_handed has a strange points from Right_handed, because there're several people have the same name that I nest them together and this causes a wrong filter.
 4. Althogh there is an animation for BMI, I still need to investigate by myself.
 5. Animation does not do a proper job as I can not see the Contrast between different categories.
