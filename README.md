@@ -24,7 +24,7 @@ So I chose **scatter plot** to do the job. I also added baseline to help audienc
 ### Improvement
 - Based on Feedback #1, I gave up multiplier, and set the region size for identify the BMI classification for normal, overweight, and obese.
 - Based on Feedback #2, I made a big change from the original one. I use color to identify the classification for BMI. I gave up the color from handedness while comparing the differences between different BMI baseballers, which becomes much clearer.
-- Based on Feedback #3, I rewritten my code and you can write the original version in old version fold. The main js code is bellow.
+- Based on Feedback #3, I rewritten my code and you can run the original version in old version fold. The main js code is bellow.
 ```javascript
  function filter_hand(handedness) {
 
